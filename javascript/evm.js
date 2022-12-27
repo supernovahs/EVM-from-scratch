@@ -285,51 +285,33 @@ function evm(code) {
       let b = stack[1];
       stack.shift();
       stack.shift();
-      console.log("a",a,b);
-      // function dec2bin(dec) {
-      //   return (dec >>> 0).toString(2);
-      // }
-      // console.log("gig",BigInt(2**256 -1));
-      // console.log("dec",dec2bin(-28));
-      if(b & (1 << 7)){
-        // console.log("Neg");
-        // let x = BigInt(b);
-        // console.log('first x ',x);
-        // let mask = ~((BigInt(1) << BigInt(8)) -BigInt(1));
-        // let mask_2 = BigInt((2**256-1) & ~((2**8)-1) );
-        // // mask_2  = (mask_2 / (2*8));
-        // console.log('mask',mask_2);
-        // // x |=mask;
-        // x |= mask_2;
-        // console.log("dfsdfds",BigInt("0x" + "ff"));
-        // console.log("x last ",x );
-        // stack.unshift(x);
-        let mask = BigInt("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00");
+      console.log("aa",a,b);
+   
+      if(b & (1 <<  ((a+1)*8)-1)){
+
+       let z = String("ff").repeat(31 - a);
+       let zz = String("00").repeat(a +1);
+        console.log("z",z,"len z",z.length,"zz",zz);
+        console.log("bal","0x" + z + zz);
+        let mask = BigInt("0x" + z + zz);
+        console.log("mask",mask);
         let x = BigInt(b);
+        console.log('x',x);
         console.log("x and maks",x | mask);
         stack.unshift(x | mask);
-
-      
       }
       else{
         stack.unshift(b);
       }
-      // while( z!=0 ){
-      //   c = z & 1;
-      //   z = z >> 1;
-      // }
-      // console.log("zzz",c);
-      // if(c ==1){
-      //   console.log("NEgative");
-      // }
-      // if(c ==0){
-      //   console.log("Positive");
-      // }
-      // stack.unshift(b);
-      // for(let z = 0 ; z < a ; z ++ ){
-      //   console.log("z",b >> 8 );
-      // }
 
+    }
+    else if (BigInt(code[i] == OPCODES.SDIV)){
+      console.log("stack" , stack);
+      let a  = stack[0];
+      let b = stack[1];
+      stack.shift();
+      stack.shift();
+      stack.unshift(a/b );
     }
 
   }
